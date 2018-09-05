@@ -30,14 +30,22 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="AQI" />
+                android:text="40" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="US AQI"
+                android:textSize="12sp" />
 
             <TextView
                 android:id="@+id/pollution_level"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="Normal" />
+                android:text="Unhealthy"
+                android:textAlignment="center" />
         </LinearLayout>
 
         <LinearLayout

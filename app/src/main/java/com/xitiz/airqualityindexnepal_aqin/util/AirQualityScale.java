@@ -27,7 +27,7 @@ public class AirQualityScale {
         } else if (51 <= _aqi && _aqi <= 100) {
             return "Moderate";
         } else if (101 <= _aqi && _aqi <= 150) {
-            return "Unhealthy for Sensitive Groups";
+            return "Sensitive";
         } else if (151 <= _aqi && _aqi <= 200) {
             return "Unhealthy";
         } else if (201 <= _aqi && _aqi <= 300) {

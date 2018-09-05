@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/menu_map"
         android:icon="@drawable/ic_map_black_24dp"
-        android:title="Map" />
+        android:title="Map"
+        app:showAsAction="always" />
+
 </menu>
