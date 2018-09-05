@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.xitiz.airqualityindexnepal_aqin">
+    package="com.xitiz.airqualityindexnepal">
 
     <uses-permission android:name="android.permission.INTERNET" />
 

@@ -1,21 +1,12 @@
-package com.xitiz.airqualityindexnepal_aqin;
+package com.xitiz.airqualityindexnepal;
 
-import android.annotation.SuppressLint;
-import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.PorterDuff;
 import android.graphics.Typeface;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.support.annotation.DrawableRes;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -26,10 +17,10 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.xitiz.airqualityindexnepal_aqin.model.Loc;
-import com.xitiz.airqualityindexnepal_aqin.model.SearchResponse;
-import com.xitiz.airqualityindexnepal_aqin.model.Station;
-import com.xitiz.airqualityindexnepal_aqin.util.AirQualityScale;
+import com.xitiz.airqualityindexnepal.model.Loc;
+import com.xitiz.airqualityindexnepal.model.SearchResponse;
+import com.xitiz.airqualityindexnepal.model.Station;
+import com.xitiz.airqualityindexnepal.util.AirQualityScale;
 
 import io.paperdb.Paper;
 
@@ -55,8 +46,7 @@ public class MapsActivity extends FragmentActivity {
                     Station station = searchResponse.getData().get(i).getStation();
                     String aqi = searchResponse.getData().get(i).getAqi();
                     String health_implications = AirQualityScale.calculateHealthImplications(searchResponse.getData().get(i).getAqi());
-                    googleMap.addMarker(new MarkerOptions().position(new LatLng(loc.getLat(), loc.getLng())).title(station.getName())).setSnippet("AQI "+aqi + ", " + health_implications);
-                    googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(loc.getLat(), loc.getLng()), 6));
+                    googleMap.addMarker(new MarkerOptions().position(new LatLng(loc.getLat(), loc.getLng())).title(station.getName())).setSnippet("AQI " + aqi + ", " + health_implications);
                     googleMap.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {
 
                         @Override
@@ -88,6 +78,8 @@ public class MapsActivity extends FragmentActivity {
                     });
 
                 }
+                googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(searchResponse.getListOfLatLong().get(0).getLat(), searchResponse.getListOfLatLong().get(0).getLng()), 6));
+
 
             }
 

@@ -1,4 +1,4 @@
-package com.xitiz.airqualityindexnepal_aqin;
+package com.xitiz.airqualityindexnepal;
 
 import android.graphics.Color;
 import android.support.annotation.NonNull;
@@ -10,8 +10,8 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.xitiz.airqualityindexnepal_aqin.model.DataItem;
-import com.xitiz.airqualityindexnepal_aqin.util.AirQualityScale;
+import com.xitiz.airqualityindexnepal.model.DataItem;
+import com.xitiz.airqualityindexnepal.util.AirQualityScale;
 
 import java.util.List;
 

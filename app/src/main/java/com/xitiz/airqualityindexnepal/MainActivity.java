@@ -1,4 +1,4 @@
-package com.xitiz.airqualityindexnepal_aqin;
+package com.xitiz.airqualityindexnepal;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -10,9 +10,10 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 
-import com.xitiz.airqualityindexnepal_aqin.model.SearchResponse;
-import com.xitiz.airqualityindexnepal_aqin.util.Const;
+import com.xitiz.airqualityindexnepal.model.SearchResponse;
+import com.xitiz.airqualityindexnepal.util.Const;
 
 import io.paperdb.Paper;
 import io.reactivex.android.schedulers.AndroidSchedulers;

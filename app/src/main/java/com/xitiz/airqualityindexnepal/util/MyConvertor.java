@@ -1,4 +1,4 @@
-package com.xitiz.airqualityindexnepal_aqin.util;
+package com.xitiz.airqualityindexnepal.util;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -11,7 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.xitiz.airqualityindexnepal_aqin.R;
+import com.xitiz.airqualityindexnepal.R;
 
 public class MyConvertor {
 

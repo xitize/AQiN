@@ -1,4 +1,4 @@
-package com.xitiz.airqualityindexnepal_aqin;
+package com.xitiz.airqualityindexnepal;
 
 import android.app.Application;
 

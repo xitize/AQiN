@@ -1,6 +1,6 @@
-package com.xitiz.airqualityindexnepal_aqin;
+package com.xitiz.airqualityindexnepal;
 
-import com.xitiz.airqualityindexnepal_aqin.model.SearchResponse;
+import com.xitiz.airqualityindexnepal.model.SearchResponse;
 
 import io.reactivex.Observable;
 import retrofit2.http.GET;

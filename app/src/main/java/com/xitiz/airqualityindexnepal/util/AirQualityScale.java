@@ -1,4 +1,4 @@
-package com.xitiz.airqualityindexnepal_aqin.util;
+package com.xitiz.airqualityindexnepal.util;
 
 public class AirQualityScale {
 

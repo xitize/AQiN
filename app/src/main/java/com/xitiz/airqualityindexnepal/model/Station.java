@@ -1,4 +1,4 @@
-package com.xitiz.airqualityindexnepal_aqin.model;
+package com.xitiz.airqualityindexnepal.model;
 
 import com.google.gson.annotations.SerializedName;
 
