@@ -3,6 +3,7 @@ package com.xitiz.airqualityindexnepal_aqin;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,8 +34,14 @@ class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.MyViewHolder> {
         DataItem dataItem = dataItems.get(position);
         holder.tv_loc.setText(dataItem.getStation().getName());
         holder.tv_aqi.setText(dataItem.getAqi());
-        holder.pol_level_background.setBackgroundColor(Color.parseColor(AirQualityScale.calculateColorLevel(dataItem.getAqi())));
-        holder.pol_level_indicator.setText(AirQualityScale.calculatePollutionLevel(dataItem.getAqi()));
+        /*handling the - not data error on AQI by try catch*/
+        try {
+            holder.pol_level_background.setBackgroundColor(Color.parseColor(AirQualityScale.calculateColorLevel(dataItem.getAqi())));
+            holder.pol_level_indicator.setText(AirQualityScale.calculatePollutionLevel(dataItem.getAqi()));
+        } catch (Exception e) {
+            Log.e("TAG", "error some data not available");
+        }
+
     }
 
 
