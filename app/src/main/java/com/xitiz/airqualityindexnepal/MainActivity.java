@@ -1,8 +1,11 @@
 package com.xitiz.airqualityindexnepal;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.location.Location;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -10,19 +13,37 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.xitiz.airqualityindexnepal.model.Loc;
 import com.xitiz.airqualityindexnepal.model.SearchResponse;
 import com.xitiz.airqualityindexnepal.util.Const;
+import com.xitiz.airqualityindexnepal.util.SortPlaces;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+import javax.inject.Inject;
 
 import io.paperdb.Paper;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
+import pub.devrel.easypermissions.AfterPermissionGranted;
+import pub.devrel.easypermissions.EasyPermissions;
+import retrofit2.Retrofit;
 
 public class MainActivity extends AppCompatActivity {
     RecyclerView recyclerView;
+    FusedLocationProviderClient fusedLocationProviderClient;
+    Loc loc;
+    List<Loc> sortedListLoc = new ArrayList<>();
 
+    @Inject
+    Retrofit retrofit;
 
     @SuppressLint("CheckResult")
     @Override
@@ -31,16 +52,26 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        ((MyApp) getApplication()).getNetComponent().inject(this);
 
-        final RestService restService = RestApi.getClient().create(RestService.class);
+        /*loads the current last location by GPS*/
+        loadLatestLocation();
 
-        restService.getSearchResponse(Const.token, " Nepal")
+        final RestService restService = retrofit.create(RestService.class);
+         restService.getSearchResponse(Const.token, " Nepal")
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new DisposableObserver<SearchResponse>() {
                     @Override
                     public void onNext(SearchResponse searchResponse) {
                         Log.d("TAG", "" + searchResponse.toString());
+                        sortedListLoc = searchResponse.getListOfLatLong();
+                        Collections.sort(sortedListLoc, new SortPlaces(loc));
+
+                        Log.d("TAG", "sorted nearest distance location is  : "
+                                + sortedListLoc.get(0).getLat() + " lng : "
+                                + sortedListLoc.get(0).getLng());
+
                         Paper.book().write("RESPONSE_STATION", searchResponse);
                         recyclerView.setAdapter(new SearchAdapter(searchResponse.getData()));
                     }
@@ -73,5 +104,38 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        //forward results to EasyPermissions
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
+    }
+
+    @SuppressLint("MissingPermission")
+    @AfterPermissionGranted(123)
+    private void loadLatestLocation() {
+        String[] perms = {Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION};
+        if (EasyPermissions.hasPermissions(this, perms)) {
+            fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+            fusedLocationProviderClient.getLastLocation().addOnSuccessListener(this, new OnSuccessListener<Location>() {
+                @Override
+                public void onSuccess(Location location) {
+                    if (location != null) {
+                        Log.d("TAG", location.getLatitude() + " " + location.getLongitude());
+                        loc = new Loc(location.getLatitude(), location.getLongitude());
+                    }
+                }
+            });
+
+//already have permission
+        } else {
+            //donot have permission do it now
+            // Ask for both permissions
+            EasyPermissions.requestPermissions(this, getString(R.string.rationale_ask),
+                    123, perms);
+        }
     }
 }

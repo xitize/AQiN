@@ -38,6 +38,8 @@ public class MapsActivity extends FragmentActivity {
         mapFragment.getMapAsync(new OnMapReadyCallback() {
             @Override
             public void onMapReady(GoogleMap googleMap) {
+
+                /*Reading the List of Responses from the Saved data in first pull*/
                 SearchResponse searchResponse = Paper.book().read("RESPONSE_STATION");
                 Log.d("TAG", "Loc size " + searchResponse.getListOfLatLong().size());
 
