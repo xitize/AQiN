@@ -1,4 +1,4 @@
-package com.xitiz.airqualityindexnepal.model;
+package com.xitiz.airqualityindexnepal.util;
 
 public class Loc {
     private Double lat;

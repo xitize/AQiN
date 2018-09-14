@@ -1,7 +1,5 @@
 package com.xitiz.airqualityindexnepal.util;
 
-import com.xitiz.airqualityindexnepal.model.Loc;
-
 import java.util.Comparator;
 
 public class SortPlaces implements Comparator<Loc> {

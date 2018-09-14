@@ -1,5 +1,6 @@
-package com.xitiz.airqualityindexnepal;
+package com.xitiz.airqualityindexnepal.ui;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -10,22 +11,30 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.xitiz.airqualityindexnepal.model.DataItem;
+import com.xitiz.airqualityindexnepal.R;
+import com.xitiz.airqualityindexnepal.db.entity.DataItem;
 import com.xitiz.airqualityindexnepal.util.AirQualityScale;
 
 import java.util.List;
 
 class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.MyViewHolder> {
     private List<DataItem> dataItems;
+    LayoutInflater layoutInflater;
 
-    SearchAdapter(List<DataItem> data) {
-        this.dataItems = data;
+    SearchAdapter(Context context) {
+        layoutInflater = LayoutInflater.from(context);
+    }
+
+    void setDataItems(List<DataItem> dataItems) {
+        this.dataItems = dataItems;
+        notifyDataSetChanged();
+
     }
 
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_layout, parent, false);
+        View view = layoutInflater.inflate(R.layout.item_layout, parent, false);
         return new MyViewHolder(view);
     }
 
@@ -47,7 +56,10 @@ class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.MyViewHolder> {
 
     @Override
     public int getItemCount() {
-        return dataItems.size();
+        if (dataItems != null) {
+            return dataItems.size();
+        } else
+            return 0;
     }
 
     class MyViewHolder extends RecyclerView.ViewHolder {

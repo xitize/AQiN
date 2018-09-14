@@ -1,4 +1,4 @@
-package com.xitiz.airqualityindexnepal;
+package com.xitiz.airqualityindexnepal.ui;
 
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -17,9 +17,10 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.xitiz.airqualityindexnepal.model.Loc;
-import com.xitiz.airqualityindexnepal.model.SearchResponse;
-import com.xitiz.airqualityindexnepal.model.Station;
+import com.xitiz.airqualityindexnepal.R;
+import com.xitiz.airqualityindexnepal.util.Loc;
+import com.xitiz.airqualityindexnepal.db.entity.SearchResponse;
+import com.xitiz.airqualityindexnepal.db.entity.Station;
 import com.xitiz.airqualityindexnepal.util.AirQualityScale;
 
 import io.paperdb.Paper;
@@ -41,7 +42,7 @@ public class MapsActivity extends FragmentActivity {
 
                 /*Reading the List of Responses from the Saved data in first pull*/
                 SearchResponse searchResponse = Paper.book().read("RESPONSE_STATION");
-                Log.d("TAG", "Loc size " + searchResponse.getListOfLatLong().size());
+                Log.d("TAG", "Location size " + searchResponse.getListOfLatLong().size());
 
                 for (int i = 0; i < searchResponse.getListOfLatLong().size(); i++) {
                     Loc loc = searchResponse.getListOfLatLong().get(i);
@@ -71,10 +72,8 @@ public class MapsActivity extends FragmentActivity {
                             TextView snippet = new TextView(getApplicationContext());
                             snippet.setTextColor(Color.GRAY);
                             snippet.setText(marker.getSnippet());
-
                             info.addView(title);
                             info.addView(snippet);
-
                             return info;
                         }
                     });

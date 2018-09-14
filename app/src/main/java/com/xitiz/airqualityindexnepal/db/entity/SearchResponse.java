@@ -1,12 +1,30 @@
-package com.xitiz.airqualityindexnepal.model;
+package com.xitiz.airqualityindexnepal.db.entity;
+
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.PrimaryKey;
+import android.arch.persistence.room.TypeConverters;
 
 import com.google.gson.annotations.SerializedName;
+import com.xitiz.airqualityindexnepal.util.Loc;
+import com.xitiz.airqualityindexnepal.db.convertors.DataItemTypeConverter;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Entity
 public class SearchResponse {
+    public int getUid() {
+        return uid;
+    }
 
+    public void setUid(int uid) {
+        this.uid = uid;
+    }
+
+    @PrimaryKey(autoGenerate = true)
+    private int uid;
+
+    @TypeConverters(DataItemTypeConverter.class)
     @SerializedName("data")
     private List<DataItem> data;
 
@@ -49,7 +67,6 @@ public class SearchResponse {
         }
         return locList;
     }
-
 
 
 }
