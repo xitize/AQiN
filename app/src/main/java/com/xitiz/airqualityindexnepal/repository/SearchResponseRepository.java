@@ -32,18 +32,16 @@ public class SearchResponseRepository {
         restService.getSearchResponse(Const.token, " Nepal").enqueue(new Callback<SearchResponse>() {
             @Override
             public void onResponse(@NonNull Call<SearchResponse> call, @NonNull Response<SearchResponse> response) {
-                if (response.isSuccessful()) {
-                    Log.d("TAG", "loaded : " + response.body().toString());
-                    SearchResponse searchResponse = response.body();
-                    //save the searchResponse
-                    //   searchResponseDao.save(searchResponse);
-                    new AsyncSave(searchResponseDao).execute(searchResponse);
-                }
+                Log.d("TAG", "loaded : " + response.body().toString());
+                SearchResponse searchResponse = response.body();
+                //save the searchResponse
+                new AsyncSave(searchResponseDao).execute(searchResponse);
+
             }
 
             @Override
             public void onFailure(@NonNull Call<SearchResponse> call, @NonNull Throwable t) {
-                Log.d("TAG", "failed to load " + t.getCause());
+                Log.d("TAG", "failed to load " + t.getMessage());
             }
         });
     }

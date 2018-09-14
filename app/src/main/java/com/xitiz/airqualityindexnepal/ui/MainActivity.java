@@ -25,9 +25,6 @@ import com.xitiz.airqualityindexnepal.SearchResponseViewModel;
 import com.xitiz.airqualityindexnepal.db.entity.SearchResponse;
 import com.xitiz.airqualityindexnepal.util.Loc;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
 
@@ -35,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     FusedLocationProviderClient fusedLocationProviderClient;
     Loc loc;
-    List<Loc> sortedListLoc = new ArrayList<>();
+    //  List<Loc> sortedListLoc = new ArrayList<>();
     SearchResponseViewModel searchResponseViewModel;
     SearchAdapter searchAdapter;
 
@@ -51,14 +48,12 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setAdapter(searchAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
 
-        /*loads the current last location by GPS*/
-        //  loadLatestLocation();
         searchResponseViewModel.loadFormWebSearchResponse();
         searchResponseViewModel.getResponseFromDB().observe(this, new Observer<SearchResponse>() {
             @Override
             public void onChanged(@Nullable SearchResponse searchResponse) {
-
-                searchAdapter.setDataItems(searchResponse.getData());
+                if (searchResponse != null)
+                    searchAdapter.setDataItems(searchResponse.getData());
             }
         });
 

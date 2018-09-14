@@ -19,7 +19,7 @@ import java.util.List;
 
 class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.MyViewHolder> {
     private List<DataItem> dataItems;
-    LayoutInflater layoutInflater;
+    private LayoutInflater layoutInflater;
 
     SearchAdapter(Context context) {
         layoutInflater = LayoutInflater.from(context);
