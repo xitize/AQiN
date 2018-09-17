@@ -9,12 +9,11 @@ import android.support.annotation.NonNull;
 import com.xitiz.airqualityindexnepal.db.entity.SearchResponse;
 
 public class SearchResponseViewModel extends AndroidViewModel {
-    private SearchResponseRepository searchResponseRepository;
     private LiveData<SearchResponse> readSearchResponse;
 
     public SearchResponseViewModel(@NonNull Application application) {
         super(application);
-        searchResponseRepository = new SearchResponseRepository(application);
+        SearchResponseRepository searchResponseRepository = new SearchResponseRepository(application);
         readSearchResponse = searchResponseRepository.getReadSearchResponse();
 
     }

@@ -93,7 +93,6 @@ public class MapsActivity extends FragmentActivity {
 
                     }
                 });
-
             }
 
         });

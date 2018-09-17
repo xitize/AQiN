@@ -39,12 +39,13 @@ public class MainActivity extends AppCompatActivity {
         searchAdapter = new SearchAdapter(this);
         recyclerView.setAdapter(searchAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+
         searchResponseViewModel.getSearchResponse().observe(this, new Observer<SearchResponse>() {
             @Override
             public void onChanged(@Nullable SearchResponse searchResponse) {
-                if (searchResponse != null)
-                    Log.d("TAG", "" + searchResponse.toString());
+                assert searchResponse != null;
                 searchAdapter.setDataItems(searchResponse.getData());
+                Log.d("TAG", "data is loaded");
             }
         });
 
