@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Air Quality Nepal</string>
     <string name="title_activity_maps">Map</string>
+    <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">AIzaSyCvtGF77mKjAokaiDf4zgpyICqRw_7QaJk</string>
 </resources>

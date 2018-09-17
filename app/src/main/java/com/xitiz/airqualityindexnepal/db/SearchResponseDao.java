@@ -8,16 +8,14 @@ import android.arch.persistence.room.Query;
 
 import com.xitiz.airqualityindexnepal.db.entity.SearchResponse;
 
-import io.reactivex.Observable;
-
 
 @Dao
 public interface SearchResponseDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void save(SearchResponse searchResponse);
+    void savedSearchResponseToDB(SearchResponse searchResponse);
 
     @Query("SELECT * FROM SearchResponse")
-    LiveData<SearchResponse> loadSearchResponseObservable();
+    LiveData<SearchResponse> loadSearchResponseFromDB();
 
 }

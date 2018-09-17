@@ -3,25 +3,26 @@ package com.xitiz.airqualityindexnepal;
 import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.MediatorLiveData;
 import android.support.annotation.NonNull;
 
 import com.xitiz.airqualityindexnepal.db.entity.SearchResponse;
-import com.xitiz.airqualityindexnepal.repository.SearchResponseRepository;
 
 public class SearchResponseViewModel extends AndroidViewModel {
     private SearchResponseRepository searchResponseRepository;
+    private LiveData<SearchResponse> readSearchResponse;
 
     public SearchResponseViewModel(@NonNull Application application) {
         super(application);
         searchResponseRepository = new SearchResponseRepository(application);
+        readSearchResponse = searchResponseRepository.getReadSearchResponse();
 
     }
 
-  public   LiveData<SearchResponse> getResponseFromDB() {
-        return searchResponseRepository.getFromDBSearchResponse();
+   public LiveData<SearchResponse> getSearchResponse() {
+        return readSearchResponse;
     }
 
-  public   void loadFormWebSearchResponse() {
-        searchResponseRepository.getFromWebSearchResponse();
-    }
+
+
 }

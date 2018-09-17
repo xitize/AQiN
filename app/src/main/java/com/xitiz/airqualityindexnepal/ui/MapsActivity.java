@@ -47,7 +47,7 @@ public class MapsActivity extends FragmentActivity {
 
                 /*Reading the List of Responses from the Saved data in first pull*/
                 //  SearchResponse searchResponse = Paper.book().read("RESPONSE_STATION");
-                searchResponseViewModel.getResponseFromDB().observe(MapsActivity.this, new Observer<SearchResponse>() {
+                searchResponseViewModel.getSearchResponse().observe(MapsActivity.this, new Observer<SearchResponse>() {
                     @Override
                     public void onChanged(@Nullable SearchResponse searchResponse) {
                         assert searchResponse != null;

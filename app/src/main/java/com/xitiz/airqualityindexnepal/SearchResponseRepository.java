@@ -1,4 +1,4 @@
-package com.xitiz.airqualityindexnepal.repository;
+package com.xitiz.airqualityindexnepal;
 
 import android.app.Application;
 import android.arch.lifecycle.LiveData;
@@ -18,23 +18,23 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class SearchResponseRepository {
+
     private SearchResponseDao searchResponseDao;
-    private RestService restService;
+    private LiveData<SearchResponse> readSearchResponse;
 
 
-    public SearchResponseRepository(Application application) {
+    SearchResponseRepository(Application application) {
         SearchResponseDatabase searchResponseDatabase = SearchResponseDatabase.getINSTANCE(application);
-        restService = RetrofitClient.getRetrofit().create(RestService.class);
+        RestService restService = RetrofitClient.getRetrofit().create(RestService.class);
         searchResponseDao = searchResponseDatabase.searchResponseDao();
-    }
 
-    public void getFromWebSearchResponse() {
         restService.getSearchResponse(Const.token, " Nepal").enqueue(new Callback<SearchResponse>() {
             @Override
             public void onResponse(@NonNull Call<SearchResponse> call, @NonNull Response<SearchResponse> response) {
-                Log.d("TAG", "loaded : " + response.body().toString());
+                assert response.body() != null;
+                Log.d("TAG", "" + response.body().toString());
                 SearchResponse searchResponse = response.body();
-                //save the searchResponse
+                //savedSearchResponseToDB the searchResponse
                 new AsyncSave(searchResponseDao).execute(searchResponse);
 
             }
@@ -44,10 +44,12 @@ public class SearchResponseRepository {
                 Log.d("TAG", "failed to load " + t.getMessage());
             }
         });
+        readSearchResponse = searchResponseDao.loadSearchResponseFromDB();
+
     }
 
-    public LiveData<SearchResponse> getFromDBSearchResponse() {
-        return searchResponseDao.loadSearchResponseObservable();
+    LiveData<SearchResponse> getReadSearchResponse() {
+        return readSearchResponse;
     }
 
     private static class AsyncSave extends AsyncTask<SearchResponse, Void, Void> {
@@ -59,7 +61,7 @@ public class SearchResponseRepository {
 
         @Override
         protected Void doInBackground(SearchResponse... searchResponses) {
-            searchResponseDao.save(searchResponses[0]);
+            searchResponseDao.savedSearchResponseToDB(searchResponses[0]);
             Log.d("TAG", "response saved to DB");
             return null;
         }

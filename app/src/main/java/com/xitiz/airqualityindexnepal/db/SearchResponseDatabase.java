@@ -15,23 +15,23 @@ import com.xitiz.airqualityindexnepal.db.entity.SearchResponse;
 import com.xitiz.airqualityindexnepal.db.entity.Station;
 import com.xitiz.airqualityindexnepal.db.entity.Time;
 
-@Database(entities = {SearchResponse.class, DataItem.class, Station.class, Time.class}, version = 1,exportSchema = false)
+@Database(entities = {SearchResponse.class, DataItem.class, Station.class, Time.class}, version = 1, exportSchema = false)
 @TypeConverters({DataItemTypeConverter.class, StationTypeConverter.class, GeoTypeConvertor.class, TimeTypeConverter.class})
 public abstract class SearchResponseDatabase extends RoomDatabase {
-   public abstract SearchResponseDao searchResponseDao();
+    public abstract SearchResponseDao searchResponseDao();
 
     static private volatile SearchResponseDatabase INSTANCE;
 
     public static SearchResponseDatabase getINSTANCE(Context context) {
         if (INSTANCE == null) {
             synchronized (SearchResponseDatabase.class) {
-                INSTANCE = Room
-                        .databaseBuilder(context.getApplicationContext(), SearchResponseDatabase.class, "search_response_db")
-                        .build();
+                if (INSTANCE == null)
+                    INSTANCE = Room
+                            .databaseBuilder(context.getApplicationContext(), SearchResponseDatabase.class, "search_response_db")
+                            .build();
             }
         }
         return INSTANCE;
     }
-
 
 }
